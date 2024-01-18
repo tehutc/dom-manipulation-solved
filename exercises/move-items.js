@@ -67,30 +67,42 @@
 // Your code goes here...
 
 document.addEventListener("DOMContentLoaded", () => {
-    const mainCollection = document.getElementById("main");
-    const favsCollection = document.getElementById("favs");
-  
-    // Move items between collections
-    function moveItem(item, targetCollection) {
-      targetCollection.appendChild(item);
+  const mainCollection = document.getElementById("main");
+  const favsCollection = document.getElementById("favs");
+
+  // Function to move items and update icon classes
+  function moveItem(item, targetCollection) {
+    // Change icon class based on the target collection
+    const icon = item.querySelector('i');
+    if (targetCollection === favsCollection) {
+      icon.classList.remove('fa-heart-circle-plus');
+      icon.classList.add('fa-heart-crack');
+    } else if (targetCollection === mainCollection) {
+      icon.classList.remove('fa-heart-crack');
+      icon.classList.add('fa-heart-circle-plus');
     }
-  
-    // Handle clicks in the Main Collection
-    mainCollection.addEventListener("click", function(event) {
-      if (event.target.classList.contains('fa-heart-circle-plus') || event.target.classList.contains('item')) {
-        const item = event.target.closest('.item');
-        moveItem(item, favsCollection);
-      }
-    });
-  
-    // Handle clicks in the Favorites Collection
-    favsCollection.addEventListener("click", function(event) {
-      if (event.target.classList.contains('fa-heart-circle-plus') || event.target.classList.contains('item')) {
-        const item = event.target.closest('.item');
-        moveItem(item, mainCollection);
-      }
-    });
+
+    // Move the item
+    targetCollection.appendChild(item);
+  }
+
+  // Handle clicks in the Main Collection
+  mainCollection.addEventListener("click", function(event) {
+    if (event.target.classList.contains('fa-heart-circle-plus') || event.target.classList.contains('item')) {
+      const item = event.target.closest('.item');
+      moveItem(item, favsCollection);
+    }
   });
+
+  // Handle clicks in the Favorites Collection
+  favsCollection.addEventListener("click", function(event) {
+    if (event.target.classList.contains('fa-heart-crack') || event.target.classList.contains('item')) {
+      const item = event.target.closest('.item');
+      moveItem(item, mainCollection);
+    }
+  });
+});
+
 
 
 

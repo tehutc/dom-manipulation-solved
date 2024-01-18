@@ -41,21 +41,25 @@
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    const cards = document.querySelectorAll(".cardsContainer .card");
-  
-    // Load initial state from local storage
-    cards.forEach(card => {
+  const cardsContainer = document.querySelector(".cardsContainer");
+  const cards = document.querySelectorAll(".cardsContainer .card");
+
+  // Load initial state from local storage
+  cards.forEach(card => {
       const isFav = localStorage.getItem(card.id) === 'true';
       card.style.backgroundColor = isFav ? 'red' : 'white';
-    });
-  
-    // Set click event for each card
-    cards.forEach(card => {
-      card.addEventListener("click", function() {
-        const isFav = this.style.backgroundColor === 'red';
-        this.style.backgroundColor = isFav ? 'white' : 'red';
-        localStorage.setItem(this.id, !isFav);
-      });
-    });
   });
+
+  // Set click event for the cards container
+  cardsContainer.addEventListener("click", function(event) {
+      // Check if a card was clicked
+      if (event.target.classList.contains('card')) {
+          const card = event.target;
+          const isFav = card.style.backgroundColor === 'red';
+          card.style.backgroundColor = isFav ? 'white' : 'red';
+          localStorage.setItem(card.id, !isFav);
+      }
+  });
+});
+
   
